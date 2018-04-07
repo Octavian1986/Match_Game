@@ -5,37 +5,56 @@ var MatchGame = {};
   Renders a 4x4 board of cards.
 */
 
+$(document).ready(function () {
+
+  let $game = $("#game");
+  let values = MatchGame.generateCardValues();
+  MatchGame.renderCards(values, $game);
+
+});
+
 /*
   Generates and returns an array of matching card values.
  */
 
-MatchGame.generateCardValues = function () {
-  let in_order_card_values = [];
-  let random_card_values = [];
-  let random_index;
+ MatchGame.generateCardValues = () => {
+   let in_order_card_values = [];
+   let random_card_values = [];
+   let random_index;
 
-  for (i = 0; i < 8; i++) {
-    in_order_card_values.push(i+1);
-    in_order_card_values.push(i+1);
-  }
+   for (i = 0; i < 8; i++) {
+     in_order_card_values.push(i+1);
+     in_order_card_values.push(i+1);
+   }
 
-  while (in_order_card_values.length > 0) {
-    random_index = Math.floor(Math.random() * 16);
-    if (typeof in_order_card_values[random_index] === "number") {
-      random_card_values.push(in_order_card_values[random_index]);
-      in_order_card_values.splice(random_index, 1);
-    }
-  }
+   for (i = 0; i < 16; i++) {
+     random_index = Math.floor(Math.random() * (16-i));
+     random_card_values.push(in_order_card_values[random_index]);
+     in_order_card_values.splice(random_index, 1);
+   }
 
-  return random_card_values;
-};
+   return random_card_values;
+ };
 
 /*
   Converts card values to jQuery card objects and adds them to the supplied game
   object.
 */
 
-MatchGame.renderCards = function(cardValues, $game) {
+MatchGame.renderCards = (random_card_values, $game) => {
+  let cardColors = ["hsl(25, 85%, 65%)", "hsl(55, 85%, 65%)", "hsl(90, 85%, 65%)",
+  "hsl(160, 85%, 65%)", "hsl(220, 85%, 65%)", "hsl(265, 85%, 65%)",
+  "hsl(310, 85%, 65%)", "hsl(360, 85%, 65%)"];
+
+  $game.empty();
+
+  for (i = 0; i < 16; i++) {
+    let $card = $('<div class="col-xs-3 card"></div>');
+    let value, color, isFlipped;
+    $card.data("value", random_card_values[i],
+      "color", cardColors[value - 1], "isFlipped", false);
+    $game.append($card);
+  }
 
 };
 
@@ -44,6 +63,6 @@ MatchGame.renderCards = function(cardValues, $game) {
   Updates styles on flipped cards depending whether they are a match or not.
  */
 
-MatchGame.flipCard = function($card, $game) {
+MatchGame.flipCard = ($card, $game) => {
 
 };

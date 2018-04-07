@@ -1,5 +1,8 @@
-body {
+html {
   font-size: 14px;
+}
+
+body {
   font-family: "Work Sans", sans-serif;
   background-color: rgb(255, 242, 242);
 }
@@ -10,7 +13,7 @@ h1 {
   color: rgb(32, 64, 86);
 }
 
-h4 {
+h2 {
   font-size: 1rem;
   font-weight: bold;
   color: rgb(32, 64, 86);
